@@ -1,0 +1,25 @@
+resources:
+- name: cf-sample-app-spring
+  type: git
+  source:
+    uri: https://github.com/cloudfoundry-samples/cf-sample-app-spring.git
+
+- name: cf-target
+  type: cf
+  source:
+    api: {{cf_api}}
+    username: {{cf_user}}
+    password: {{cf_user_pass}}
+    organization: {{cf_org}}
+    space: {{cf_space}}
+    skip_cert_check: true
+
+jobs:
+- name: deploy CF
+  plan:
+  - get: cf-sample-app-spring
+    trigger: true
+  - put: cf-target
+    params:
+      manifest: cf-sample-app-spring/manifest.yml
+      path: cf-sample-app-spring

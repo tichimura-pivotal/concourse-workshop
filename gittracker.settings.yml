@@ -1,0 +1,3 @@
+YOUR_GITHUB_REPOSITORY: https://
+TRACKER_API_TOKEN: YOUR TRACKER API TOKEN # https://www.pivotaltracker.com/profileから取得可能
+TRACKER_PROJECT_ID: Project ID # https://www.pivotaltracker.com/projects/<project_id>, あるいはProject > General Settingsで設定可能

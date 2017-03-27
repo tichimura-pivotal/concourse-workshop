@@ -1,0 +1,5 @@
+cf_api: https://api.run.pivotal.io
+cf_user: $CI_CFUSER
+cf_user_pass: $CI_CFPASS
+cf_org: $CI_ORG
+cf_space: $CI_SPACE

@@ -1,0 +1,27 @@
+resources:
+- name: git-repo-path
+  type: git
+  source:
+    uri: {{YOUR_GITHUB_REPOSITORY}}
+
+- name: tracker-output
+  type: tracker-resource
+  source:
+    token: {{TRACKER_API_TOKEN}}
+    project_id: "{{TRACKER_PROJECT_ID}}"
+    tracker_url: https://www.pivotaltracker.com
+
+resource_types:
+- name: tracker-resource
+  type: docker-image
+  source:
+    repository: concourse/tracker-resource
+
+jobs:
+- name: deploy
+  plan:
+  - get: git-repo-path
+  - put: tracker-output
+    params:
+      repos:
+      - git-repo-path
