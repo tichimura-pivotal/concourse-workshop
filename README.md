@@ -50,13 +50,14 @@ $ docker-machine env
 # 環境変数の設定
 $ eval $(docker-machine env default)
 ```
-
+
 - Docker Composeを利用してインストール
 
   (詳細はこちら
   http://concourse.ci/docker-repository.html )
 
   1. サンプルのYAMLファイルを作成(docker-compose.ymlとして保存します)
+
 ```
     concourse-db:
       image: postgres:9.5
@@ -97,22 +98,24 @@ $ eval $(docker-machine env default)
 ```
 
   3. Docker machineを利用している場合
-    ```
+
+  ``
   export CONCOURSE_EXTERNAL_URL=http://192.168.99.100:8080
-  　```
+  ``
 
   4. dockerの起動
 
     4-1. フォアグランド実行
-    ```
+
+  ``
   docker-compose up
-    ```
+  ``
 
     4-2. バックグランド実行
-    ```
+    
+  ``
   docker-compose up -d
-    ```
-
+  ``
 
   参考: Concourse Docker Hubはこちら   
     https://hub.docker.com/u/concourse/
@@ -186,7 +189,7 @@ $ eval $(docker-machine env default)
  ボタン(再生ボタンのような)を押す
 
  ``
-fly -t lite unpause-pipeline -p hello-world
+fly -t demo unpause-pipeline -p hello-world
   ``
 
   "hello world" jobをクリックして、右側のプラスボタンを押下
