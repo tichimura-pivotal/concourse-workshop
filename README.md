@@ -112,7 +112,7 @@ $ eval $(docker-machine env default)
   ``
 
     4-2. バックグランド実行
-    
+
   ``
   docker-compose up -d
   ``
@@ -259,7 +259,7 @@ resources:
 - name: cf-sample-app-spring
   type: git
   source:
-    uri: https://tichimura-pivotal@github.com/cloudfoundry-samples/cf-sample-app-spring.git
+    uri: https://github.com/cloudfoundry-samples/cf-sample-app-spring.git
 
 - name: cf-target
   type: cf
@@ -291,6 +291,12 @@ cf_user_pass: $CI_CFPASS
 cf_org: $CI_ORG
 cf_space: $CI_SPACE
 ```
+
+  - fly コマンドの実行
+
+``
+fly -t demo set-pipeline -p hello-cf -c cf-simple.yml -l cf-simple-settings.yml
+``
 
 #### Java プロジェクトとしての展開
 
