@@ -464,7 +464,8 @@ jobs:
   Taskの実行結果によって、取りうるアクションを決められます。
 
   - on_successの利用
-  ``
+
+```
   plan:
   - get: foo
   - task: unit
@@ -472,22 +473,22 @@ jobs:
     on_success:
       task: alert
       file: foo/alert.yml  
-  ``
+  ```
 
-  これは、下記と同じ内容ですが、後述のon_failureとの使い分けを考えるとon_successを使うのが推奨されます。
+  上記は、下記と同じ内容ですが、後述のon_failureとの使い分けを考えると上記のon_successを使うのが推奨されます。
 
-  ``
+  ```
   plan:
   - get: foo
   - task: unit
     file: foo/unit.yml
   - task: alert
     file: foo/alert.yml  
-  ``
+  ```
 
   - on_failureの利用
 
-  ``
+```
   plan:
   - get: foo
   - task: unit
@@ -495,9 +496,11 @@ jobs:
     on_failure:
       task: alert
       file: foo/alert.yml
-  ``
+  ```
 
-  ``
+  ```
+  plan:
+  - get: foo
   - task: unit
     file: atomy-pr/ci/unit.yml
     on_success:
@@ -510,11 +513,11 @@ jobs:
       params:
         path: atomy-pr
         status: failure  
-  ``
+  ```
 
 #### 通知ツールとの連携
 
-``
+```
 resource_types:
 - name: slack-notification
   type: docker-image
@@ -537,14 +540,14 @@ on_failure:
   params:
     text: |
       The deploy has failed...:
-``
+```
 
 #### Jobの管理
 
-  ``
+  ```
   # -j PIPELINE/JOB
   fly -t demo watch -j hello-cf/"deploy CF"
-  ``
+  ```
 
 
 #### 参考 Authの取り方
