@@ -1,6 +1,7 @@
 resources:
 - name: git-repo-path
   type: git
+  check_every: 5s
   source:
     uri: {{YOUR_GITHUB_REPOSITORY}}
 
@@ -8,7 +9,7 @@ resources:
   type: tracker-resource
   source:
     token: {{TRACKER_API_TOKEN}}
-    project_id: "{{TRACKER_PROJECT_ID}}"
+    project_id: {{TRACKER_PROJECT_ID}}
     tracker_url: https://www.pivotaltracker.com
 
 resource_types:
@@ -21,7 +22,9 @@ jobs:
 - name: deploy
   plan:
   - get: git-repo-path
+    trigger: true
   - put: tracker-output
     params:
       repos:
       - git-repo-path
+

@@ -139,9 +139,9 @@ $ eval $(docker-machine env default)
 　
 
 ### ii. fly コマンドの利用
-- Concourseへのloginの実施
-  - VirtualBoxの場合
+- ConcourseへのAdmin権限でのloginの実施
 
+  - VirtualBoxの場合
   ``
   fly -t demo login -c http://192.168.100.4:8080
   ``
@@ -157,6 +157,34 @@ $ eval $(docker-machine env default)
   fly -t demo login -c $CONCOURSE_EXTERNAL_URL
   ``
 
+  - Concourse serverがdeployされている場合
+
+  ``
+  fly -t demo login -c http://<atcのip>:8080
+  ``
+  (8080 portで受け付けていることを想定)
+
+- Concourseへのteamの登録(BASIC認証)
+
+  注: Adminでのログインが必要です。(Basic認証の場合は複数ユーザ登録ができません)
+
+  ``
+  $ fly -t kddi set-team -n team1 --basic-auth-username=user --basic-auth-password=pass
+  Team Name: team1
+  Basic Auth: enabled
+  GitHub Auth: disabled
+  UAA Auth: disabled
+  Generic OAuth: disabled
+  apply configuration? [yN]: y
+  team created  
+  ``
+
+- Concourseへのユーザloginの実施
+
+  ``
+  fly -t demo login -c <target> -n <team> -u <user> -p <pass>
+  ``
+  　　
 #### pipelineの作成
 
 - YAMLファイルの作成(1)
@@ -244,9 +272,8 @@ fly -t demo unpause-pipeline -p hello-world
 
  - inputsとoutputsを定義して、タスクとして実施する内容を記述
  - 必須項目としては、
-  - platform
-  - inputs
-  - run
+    - platform
+    - run
  - fly CLIのexecuteコマンドから実行も可能
 
 #### Cloud Foundryへの展開
@@ -314,7 +341,7 @@ fly -t demo set-pipeline -p hello-cf -c cf-simple.yml -l cf-simple-settings.yml
 git clone https://github.com/<your-git-name>/PCF-demo.git
 ``
 
-　3. タスクの実行
+　3. Unitタスクの実行
 
 ```
 $  cd PCF-demo
@@ -418,11 +445,107 @@ jobs:
   fly -t TARGET set-pipeline -p trackerdemo -c gittracker.yml -l gittracker.settings.yml
   ``
 
+- Storyの作成と、commitの実施
+
+  - story idの作成と開始(Startedになっていることを確認)
+  - story idのコピー
+  - git commit -m "XXXXXXXX [(Finishes|Finished) #ID]"
+  - story の状態が指定した通りに変わっている事を確認(Started->Finished)
+  - pipelineに登録した内容により　Deliveredになる事を確認
+
 #### 自習
 
-https://github.com/Pivotal-Field-Engineering/PCF-demo/tree/master/ci
-http://concourse.ci/flight-school.html
-https://github.com/concourse/atc/blob/master/routes.go#L126
+- https://github.com/Pivotal-Field-Engineering/PCF-demo/tree/master/ci
+- http://concourse.ci/flight-school.html
+- https://github.com/concourse/atc/blob/master/routes.go#L126
+
+#### Taskの実行結果とアクション
+
+  Taskの実行結果によって、取りうるアクションを決められます。
+
+  - on_successの利用
+  ``
+  plan:
+  - get: foo
+  - task: unit
+    file: foo/unit.yml
+    on_success:
+      task: alert
+      file: foo/alert.yml  
+  ``
+
+  これは、下記と同じ内容ですが、後述のon_failureとの使い分けを考えるとon_successを使うのが推奨されます。
+
+  ``
+  plan:
+  - get: foo
+  - task: unit
+    file: foo/unit.yml
+  - task: alert
+    file: foo/alert.yml  
+  ``
+
+  - on_failureの利用
+
+  ``
+  plan:
+  - get: foo
+  - task: unit
+    file: foo/unit.yml
+    on_failure:
+      task: alert
+      file: foo/alert.yml
+  ``
+
+  ``
+  - task: unit
+    file: atomy-pr/ci/unit.yml
+    on_success:
+      put: atomy-pr
+      params:
+        path: atomy-pr
+        status: success
+    on_failure:
+      put: atomy-pr
+      params:
+        path: atomy-pr
+        status: failure  
+  ``
+
+#### 通知ツールとの連携
+
+``
+resource_types:
+- name: slack-notification
+  type: docker-image
+  source:
+    repository: cfcommunity/slack-notification-resource
+    tag: latest
+...
+- name: slack-alert
+  type: slack-notification
+  source:
+    url: https://hooks.slack.com/services/xxxx
+...
+on_success:
+  put: slack-alert
+  params:
+    text: |
+      The deploy has done...:
+on_failure:
+  put: slack-alert
+  params:
+    text: |
+      The deploy has failed...:
+``
+
+#### Jobの管理
+
+  ``
+  # -j PIPELINE/JOB
+  fly -t demo watch -j hello-cf/"deploy CF"
+  ``
+
 
 #### 参考 Authの取り方
 
