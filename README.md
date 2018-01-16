@@ -447,6 +447,7 @@ jobs:
 
 - Storyの作成と、commitの実施
 
+  - github上でpivotal trackerとの連携( "Settings" -> "Integration & Services" )
   - story idの作成と開始(Startedになっていることを確認)
   - story idのコピー
   - git commit -m "XXXXXXXX [(Finishes|Finished) #ID]"
