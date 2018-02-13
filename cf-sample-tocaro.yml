@@ -4,6 +4,7 @@ resources:
   source:
 #    uri: https://github.com/cloudfoundry-samples/cf-sample-app-spring.git
     uri: https://github.com/tichimura-pivotal/cf-sample-app-spring.git
+  check_every: 10s # demo only
 
 - name: cf-target
   type: cf
