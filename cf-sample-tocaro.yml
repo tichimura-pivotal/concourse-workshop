@@ -2,7 +2,8 @@ resources:
 - name: cf-sample-app-spring
   type: git
   source:
-    uri: https://github.com/cloudfoundry-samples/cf-sample-app-spring.git
+#    uri: https://github.com/cloudfoundry-samples/cf-sample-app-spring.git
+    uri: https://github.com/tichimura-pivotal/cf-sample-app-spring.git
 
 - name: cf-target
   type: cf
@@ -39,7 +40,7 @@ jobs:
     put: tocaro-alert
     params:
       text: |
-        The deploy has succeeded...:
+        成功しました...:
   on_failure:
     put: tocaro-alert
     params:
