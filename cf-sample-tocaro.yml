@@ -41,7 +41,7 @@ jobs:
     put: tocaro-alert
     params:
       text: |
-        成功しました...:
+        "メッセージを入力":
   on_failure:
     put: tocaro-alert
     params:
