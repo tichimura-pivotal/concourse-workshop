@@ -286,7 +286,7 @@ TOCARO_CHANNEL_ID: $TOCARO_CHANNEL_ID
   - fly コマンドの実行
 
 ```
-fly -t demo set-pipeline -p hello-tocaro -c cf-simple-tocaro.yml -l cf-simple-settings.yml  
+fly -t demo set-pipeline -p hello-tocaro -c cf-sample-tocaro.yml -l cf-sample-tocaro-settings.yml  
 fly -t demo unset-pipeline -p hello-tocaro
 ```
 
