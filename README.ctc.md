@@ -165,6 +165,7 @@ jobs:
 ```
  cloud foundryのログイン情報を下記のファイルで設定します。   
  cfコマンドあるいは、PWSのサイト(https://run.pivotal.io)にアクセスしてください。   
+ 組織(Org), ワークスペース(Space)
  注) パスワードがわからない場合は、``https://run.pivotal.io``にて``reset password``が可能です。
 
   - cf-simple-settings.yml
@@ -285,7 +286,7 @@ TOCARO_CHANNEL_ID: $TOCARO_CHANNEL_ID
   - fly コマンドの実行
 
 ``
-fly -t demo set-pipeline -p hello-tocaro -c cf-simple.yml -l cf-simple-settings.yml
+fly -t demo set-pipeline -p hello-tocaro -c cf-simple-tocaro.yml -l cf-simple-settings.yml
 fly -t demo unset-pipeline -p hello-tocaro
 ``
 
