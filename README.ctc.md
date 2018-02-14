@@ -163,6 +163,9 @@ jobs:
       manifest: cf-sample-app-spring/manifest.yml
       path: cf-sample-app-spring
 ```
+ cloud foundryのログイン情報を下記のファイルで設定します。   
+ cfコマンドあるいは、PWSのサイト(https://run.pivotal.io)にアクセスしてください。   
+ 注) パスワードがわからない場合は、``https://run.pivotal.io``にて``reset password``が可能です。
 
   - cf-simple-settings.yml
 
@@ -173,6 +176,17 @@ cf_user_pass: $CI_CFPASS
 cf_org: $CI_ORG
 cf_space: $CI_SPACE
 ```
+
+ - サンプル  
+
+```
+cf_api: https://api.run.pivotal.io
+cf_user: ichi@cf.local
+cf_user_pass: password
+cf_org: Myorg
+cf_space: Myspace
+```
+
 
   - fly コマンドの実行
 
