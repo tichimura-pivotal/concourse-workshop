@@ -329,11 +329,11 @@ fly -t demo set-pipeline -p hello-cf -c cf-simple.yml -l cf-simple-settings.yml
 
   以下を参考にして、パイプラインを構成してみましょう。
 
-[https://github.com/Pivotal-Field-Engineering/PCF-demo/tree/master/ci]
+[https://github.com/tichimura-pivotal/PCF-demo/tree/master/ci]
 
   1. プロジェクトのfork
 
-  https://github.com/Pivotal-Field-Engineering/PCF-demo.git
+  https://github.com/tichimura-pivotal/pcf-demo-war.git
 
   2. git cloneの実施
 
